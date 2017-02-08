@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>$i18n.getText("my.plugin.name")</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="decorator" content="atl.admin">
+
+    $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+    $webResourceManager.requireResource("com.atlassian.auiplugin:aui-form-notification")
+
+## Alternativ:
+##    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+##    <script src="//aui-cdn.atlassian.com/aui-adg/6.0.6/js/aui.min.js"></script>
+##    <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/6.0.6/css/aui.min.css" media="all">
+
+    <script>
+        AJS.$(document).ready(function () {
+            // enable inline help
+            AJS.inlineHelp();
+        });
+    </script>
+</head>
+<body>
+<h2>$i18n.getText("my.plugin.name")</h2>
+
+
+#if($saved)
+<div class="aui-message aui-message-success fadeout">
+    <p>Successfully saved.</p>
+</div>
+#end
+
+<form class="aui" action="" method="post">
+    <div class="field-group">
+        <label for="comment-email">Webhook URL<span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field"
+               type="text"
+               id="webhook"
+               name="webhook"
+               value="$webhook"
+            #if($errors.webhook)
+               data-aui-notification-field
+               data-aui-notification-error="$errors.webhook"
+            #end
+        >
+
+        <div class="description">
+            Add a incomming webhook in Slack: <a href="https://my.slack.com/services/new/incoming-webhook/">add a webhook</a>. Choose any channel. Copy the
+            Webhook URL and paste it here.
+        </div>
+    </div>
+    <div class="field-group">
+        <label for="comment-input">Comment</label>
+        <textarea class="textarea" name="comment-input"
+                  id="comment-input" placeholder="Your comment here..."></textarea>
+    </div>
+    <div class="field-group">
+        <label for="disabled-field-id">Disabled
+            field</label>
+        <input class="text" type="text" id="disabled-field-id" name="nameoffield" disabled placeholder="you@example.com">
+    </div>
+    <div class="field-group">
+        <input type="text" class="text">
+        <div class="error">Error message here</div>
+    </div>
+    <div class="field-group">
+        <input type="text" class="text">
+        <div class="description">Some
+            extra info that is nice to know but the user can get by without
+            it.
+        </div>
+    </div>
+
+    <div class="field-group">
+        <label for="inline-help-example">First
+            name<span class="aui-icon icon-required"></span></label>
+        <input class="text" type="text" id="inline-help-example" name="inline-help-example">
+        <span class="aui-icon icon-inline-help"><span>Help</span></span>
+        <span class="field-help hidden">
+            This text will be toggled if the user clicks the help icon.
+        </span>
+    </div>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <button class="aui-button aui-button-primary">Save</button>
+            <a class="cancel" href="">Cancel</a>
+        </div>
+    </div>
+</form>
+</body>
+</html>

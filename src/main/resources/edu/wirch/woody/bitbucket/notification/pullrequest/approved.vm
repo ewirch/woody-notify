@@ -1,0 +1,1 @@
+Your pull request <$prUrl|$prName> has been approved#if($reviewers > 1) by $reviewer#end.

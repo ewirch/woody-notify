@@ -1,0 +1,47 @@
+<root>
+    <item name='edu.wirch.woody.bitbucket.conf.Action'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NonSerializableFieldInSerializableClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.Action java.util.Map&lt;java.lang.String,java.lang.String&gt; toStringMap(javax.servlet.http.HttpServletRequest)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;unchecked&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithOnlyPrivateConstructors&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Validator validator(edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Builder)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StaticMethodOnlyUsedInOneClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Builder'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;WeakerAccess&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Mapper'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;WeakerAccess&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Mapper void ifExisting(java.lang.String, java.util.Map&lt;java.lang.String,java.lang.String&gt;, java.util.function.Consumer&lt;java.lang.String&gt;) 0'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;SameParameterValue&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Validator void validateWebHook()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UnnecessaryReturnStatement&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.conf.PresenterTest java.util.Map&lt;java.lang.String,java.lang.String&gt; map(java.lang.String, java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;SameParameterValue&quot;"/>
+        </annotation>
+    </item>
+</root>
