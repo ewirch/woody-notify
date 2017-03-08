@@ -6,6 +6,9 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import edu.wirch.woody.chatservice.ChatService;
+import edu.wirch.woody.chatservice.SendProblemException;
+import edu.wirch.woody.chatservice.Target;
+import edu.wirch.woody.chatservice.TestChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
@@ -13,21 +16,22 @@ import javax.annotation.Nonnull;
 import javax.ws.rs.core.MediaType;
 
 @Slf4j
-public class SlackChatService implements ChatService {
-
+public class SlackChatService implements ChatService, TestChatService {
+//  https://hooks.slack.com/services/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
     private final String webhook;
+    private final ReturnCodeMessageMapper messageMapper;
 
     public SlackChatService(final String webhook) {
         this.webhook = webhook;
+        messageMapper = new ReturnCodeMessageMapper();
     }
 
     @Override
-    public void send(final String user, final String text) {
-        log.info("Sending to {}", toSlackUserString(user));
+    public void send(final Target target, final String text) {
         final SlackMessage message = SlackMessage.defaultValues()
                                                  .userName("Woody-Notify")
                                                  .icon_url("https://maxcdn.icons8.com/Color/PNG/48/Cinema/woody_woodpecker-48.png")
-                                                 .channel(toSlackUserString(user))
+                                                 .channel(target.getTarget())
                                                  .text(text)
                                                  .build();
         final WebResource resource = getDefaultClient().resource(webhook);
@@ -36,9 +40,13 @@ public class SlackChatService implements ChatService {
                                                 .entity(message, MediaType.APPLICATION_JSON_TYPE)
                                                 .post(ClientResponse.class);
         if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
-            log.error("Client returned status {} ({}): {}", response.getStatus(), response.getClientResponseStatus()
-                                                                                          .getReasonPhrase(), response.getEntity(String.class));
+            throw new SendProblemException(messageMapper.map(response.getStatus(), response.getEntity(String.class), message));
         }
+    }
+
+    @Override
+    public void testSend(final Target target, final String text) {
+        send(target, text);
     }
 
     @Nonnull

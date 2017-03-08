@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class Action extends HttpServlet {
@@ -22,16 +18,18 @@ public class Action extends HttpServlet {
 
     private final LoginUriProvider loginUriProvider;
     private final Presenter presenter;
+    private final ActionSupport actionSupport;
 
     @Autowired
     public Action(@ComponentImport final LoginUriProvider loginUriProvider, final Presenter presenter) {
         this.loginUriProvider = loginUriProvider;
         this.presenter = presenter;
+        actionSupport = new ActionSupport();
     }
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        setContentType(resp);
+        actionSupport.setContentType(resp);
         if (!presenter.get(resp.getWriter())) {
             redirectToLogin(req, resp);
         }
@@ -39,23 +37,9 @@ public class Action extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        setContentType(resp);
-        presenter.set(toStringMap(req), resp.getWriter());
+        actionSupport.setContentType(resp);
+        presenter.set(actionSupport.toStringMap(req), resp.getWriter());
     }
-
-
-    private void setContentType(final HttpServletResponse resp) {
-        resp.setContentType("text/html; charset=UTF-8");
-    }
-
-    private Map<String, String> toStringMap(final HttpServletRequest req) {
-        final Map<String, String> map = new HashMap<>();
-        for (final String name : Collections.list((Enumeration<String>) req.getParameterNames())) {
-            map.put(name, req.getParameter(name));
-        }
-        return map;
-    }
-
 
     private void redirectToLogin(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         response.sendRedirect(loginUriProvider.getLoginUri(getUri(request))

@@ -1,3 +1,13 @@
+#* @vtlvariable name="maintenanceEndedEvent" type="java.lang.Boolean" *#
+#* @vtlvariable name="maintenanceStartedEvent" type="java.lang.Boolean" *#
+#* @vtlvariable name="backupFailedEvent" type="java.lang.Boolean" *#
+#* @vtlvariable name="authenticationFailureEvent" type="java.lang.Boolean" *#
+#* @vtlvariable name="globalEventChannel" type="java.lang.String" *#
+#* @vtlvariable name="errors" type="java.util.Map" *#
+#* @vtlvariable name="webhook" type="java.lang.String" *#
+#* @vtlvariable name="saved" type="java.lang.Boolean" *#
+#* @vtlvariable name="webResourceManager" type="com.atlassian.plugin.webresource.WebResourceManager" *#
+#* @vtlvariable name="i18n" type="com.atlassian.sal.api.message.I18nResolver" *#
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -18,21 +28,50 @@
             // enable inline help
             AJS.inlineHelp();
         });
+
+
+        function sendTestMessage(userElement) {
+            var webhook = document.getElementById("webhook").value;
+            var target = userElement.value;
+
+            var errorText = "this is ia error text";
+            jQuery.ajax("test", {
+                data: {
+                    target: target,
+                    webhook: webhook
+                },
+                error: function (xhr2, textStatus, errorThrown) {
+                    AJS.flag({
+                        type: 'error',
+                        title: 'Error sending test message',
+                        body: AJS.escapeHtml(xhr2.responseText)
+                    });
+                },
+                success: function (xhr, textStatus, errorThrown) {
+                    AJS.flag({
+                        type: 'success',
+                        body: "Message successfully sent."
+                    });
+                }
+            });
+        }
     </script>
+
 </head>
 <body>
 <h2>$i18n.getText("my.plugin.name")</h2>
 
 
-#if($saved)
-<div class="aui-message aui-message-success fadeout">
-    <p>Successfully saved.</p>
-</div>
-#end
+    #if($saved)
+    <div class="aui-message aui-message-success fadeout">
+        <p>Successfully saved.</p>
+    </div>
+    #end
 
 <form class="aui" action="" method="post">
+    <h3>Connection</h3>
     <div class="field-group">
-        <label for="comment-email">Webhook URL<span class="aui-icon icon-required">(required)</span></label>
+        <label for="webhook">Webhook URL<span class="aui-icon icon-required">(required)</span></label>
         <input class="text long-field"
                type="text"
                id="webhook"
@@ -43,50 +82,82 @@
                data-aui-notification-error="$errors.webhook"
             #end
         >
-
         <div class="description">
-            Add a incomming webhook in Slack: <a href="https://my.slack.com/services/new/incoming-webhook/">add a webhook</a>. Choose any channel. Copy the
-            Webhook URL and paste it here.
+            Add a incomming webhook in Slack: <a href="https://my.slack.com/services/new/incoming-webhook/">add a webhook</a>. Choose any channel (Woody
+            will override it anyway). Copy the Webhook URL and paste it here.
         </div>
-    </div>
-    <div class="field-group">
-        <label for="comment-input">Comment</label>
-        <textarea class="textarea" name="comment-input"
-                  id="comment-input" placeholder="Your comment here..."></textarea>
-    </div>
-    <div class="field-group">
-        <label for="disabled-field-id">Disabled
-            field</label>
-        <input class="text" type="text" id="disabled-field-id" name="nameoffield" disabled placeholder="you@example.com">
-    </div>
-    <div class="field-group">
-        <input type="text" class="text">
-        <div class="error">Error message here</div>
-    </div>
-    <div class="field-group">
-        <input type="text" class="text">
-        <div class="description">Some
-            extra info that is nice to know but the user can get by without
-            it.
+
+        <div class="buttons">
+            <button class="aui-button" type="button" data-aui-trigger aria-controls="test-dialog">Test</button>
         </div>
     </div>
 
+    <h3>Global Notifications</h3>
     <div class="field-group">
-        <label for="inline-help-example">First
-            name<span class="aui-icon icon-required"></span></label>
-        <input class="text" type="text" id="inline-help-example" name="inline-help-example">
-        <span class="aui-icon icon-inline-help"><span>Help</span></span>
-        <span class="field-help hidden">
-            This text will be toggled if the user clicks the help icon.
-        </span>
+        <label for="globalEventChannel">Send to</label>
+        <input class="text"
+               type="text"
+               id="globalEventChannel"
+               name="globalEventChannel"
+               placeholder="#channel or @user"
+               value="$globalEventChannel"
+            #if($errors.globalEventChannel)
+               data-aui-notification-field
+               data-aui-notification-error="$errors.globalEventChannel"
+            #end
+        >
+        <button class="aui-button" type="button" onclick="sendTestMessage(document.getElementById('globalEventChannel'))">Test</button>
+        <div class="description">
+            The name of a channel which will receive global notifications. You can provide a user name if you prefix it with a '@' or a channel with a '#' prefix.
+        </div>
     </div>
+
+    <fieldset class="group">
+        <legend><span>Events</span></legend>
+        <div class="checkbox">
+            <input class="checkbox" type="checkbox"
+                   name="authenticationFailureEvent" id="authenticationFailureEvent"
+                    #if($authenticationFailureEvent) checked #end
+            >
+            <label for="authenticationFailureEvent">Authentication Failure</label>
+        </div>
+        <div class="checkbox">
+            <input class="checkbox" type="checkbox"
+                   name="backupFailedEvent" id="backupFailedEvent"
+                    #if($backupFailedEvent) checked #end
+            >
+            <label for="backupFailedEvent">Backup Failure</label>
+        </div>
+        <div class="checkbox">
+            <input class="checkbox" type="checkbox"
+                   name="maintenanceStartedEvent" id="maintenanceStartedEvent"
+                   #if($maintenanceStartedEvent) checked #end
+            >
+            <label for="maintenanceStartedEvent">Maintenance Started</label>
+        </div>
+        <div class="checkbox">
+            <input class="checkbox" type="checkbox"
+                   name="maintenanceEndedEvent" id="maintenanceEndedEvent"
+                   #if($maintenanceEndedEvent) checked #end
+            >
+            <label for="maintenanceEndedEvent">Maintenance Ended</label>
+        </div>
+
+    </fieldset>
 
     <div class="buttons-container">
         <div class="buttons">
             <button class="aui-button aui-button-primary">Save</button>
-            <a class="cancel" href="">Cancel</a>
+            <a class="aui-button aui-button-link cancel" href="javascript:window.location.href=window.location.href">Cancel</a>
         </div>
     </div>
 </form>
+
+<aui-inline-dialog id="test-dialog">
+    <div class="field-group">
+        <input type="text" class="text" name="username" id="username" placeholder="@username or #chat"/>
+        <button class="aui-button aui-button-primary" type="button" onclick="sendTestMessage(document.getElementById('username'))">Send</button>
+    </div>
+</aui-inline-dialog>
 </body>
 </html>

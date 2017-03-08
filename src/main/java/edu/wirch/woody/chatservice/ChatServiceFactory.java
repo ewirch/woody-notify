@@ -25,4 +25,8 @@ public class ChatServiceFactory {
         return new SlackChatService(webhook);
     }
 
+    public TestChatService createTestService(final String webhook) {
+        return new SlackChatService(webhook);
+    }
+
 }

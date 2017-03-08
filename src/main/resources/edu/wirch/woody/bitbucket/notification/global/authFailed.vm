@@ -1,0 +1,2 @@
+#* @vtlvariable name="user" type="java.lang.String" *#
+Authentication of user $user failed.

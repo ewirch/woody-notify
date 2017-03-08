@@ -1,0 +1,12 @@
+<root>
+	<item name='edu.wirch.woody.chatservice.Target'>
+		<annotation name='java.lang.SuppressWarnings'>
+			<val val="&quot;StaticMethodOnlyUsedInOneClass&quot;"/>
+		</annotation>
+	</item>
+	<item name='edu.wirch.woody.chatservice.TestChatService void testSend(edu.wirch.woody.chatservice.Target, java.lang.String)'>
+		<annotation name='java.lang.SuppressWarnings'>
+			<val val="&quot;SameParameterValue&quot;"/>
+		</annotation>
+	</item>
+</root>

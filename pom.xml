@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.wirch</groupId>
     <artifactId>woody-notify</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <organization>
         <name>Example Company</name>
         <url>http://www.example.com/</url>
@@ -53,6 +53,13 @@
         <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- used for WebResourceManager reference in Velocity templates -->
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-webresource</artifactId>
+            <version>3.5.32</version>
             <scope>provided</scope>
         </dependency>
 

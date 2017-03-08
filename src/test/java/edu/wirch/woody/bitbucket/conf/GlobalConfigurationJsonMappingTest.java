@@ -9,7 +9,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class GlobalConfigurationJsonMappingTest {
 
-    private static final String DEFAULT_SERIALIZED = "{\"webhook\":\"http://server.com/some/64aeou4a6u4e6u4ao\"}";
+    private static final String DEFAULT_SERIALIZED = "{\"webhook\":\"http://server.com/some/64aeou4a6u4e6u4ao\",\"globalEventChannel\":null,\"authenticationFailureEvent\":false,\"backupFailedEvent\":false,\"maintenanceStartedEvent\":false,\"maintenanceEndedEvent\":false}";
 
     @Test
     public void testSerialization() throws IOException {

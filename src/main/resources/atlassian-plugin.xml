@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
-  <plugin-info>
-    <description>${project.description}</description>
-    <version>${project.version}</version>
-    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
-    <param name="plugin-icon">images/pluginIcon.png</param>
-    <param name="plugin-logo">images/pluginLogo.png</param>
-  </plugin-info>
-  <!-- add our i18n resource -->
-  <resource type="i18n" name="texts" location="texts"/>
-  <!-- add our web resources -->
-  <!--<web-resource key="woody-notify-resources" name="woody-notify Web Resources">-->
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="texts" location="texts"/>
+    <!-- add our web resources -->
+    <!--<web-resource key="woody-notify-resources" name="woody-notify Web Resources">-->
     <!--<dependency>com.atlassian.auiplugin:ajs</dependency>-->
     <!--<resource type="download" name="woody-notify.css" location="/css/woody-notify.css"/>-->
     <!--<resource type="download" name="woody-notify.js" location="/js/woody-notify.js"/>-->
     <!--<resource type="download" name="images/" location="/images"/>-->
     <!--<context>woody-notify</context>-->
-  <!--</web-resource>-->
+    <!--</web-resource>-->
 
-  <web-item key="conf-link.woody.slack" name="Slack (Woody) Team Configuration" section="atl.admin/admin-settings-section">
-    <label key="my.plugin.name"/>
-    <link linkId="configureSlackWoodyTeam">/plugins/servlet/woody-notify/global.conf</link>
-  </web-item>
+    <web-item key="conf-link.woody.slack" name="Slack (Woody) Team Configuration" section="atl.admin/admin-settings-section">
+        <label key="my.plugin.name"/>
+        <link linkId="configureSlackWoodyTeam">/plugins/servlet/woody-notify/global.conf</link>
+    </web-item>
 
 
-  <servlet name="Glob Conf Servlet" key="woody-notify-glob-conf" class="edu.wirch.woody.bitbucket.conf.Action">
-    <description>Provides the UI for global settings</description>
-    <url-pattern>/woody-notify/global.conf</url-pattern>
-  </servlet>
+    <servlet name="Glob Conf Servlet" key="woody-notify-glob-conf" class="edu.wirch.woody.bitbucket.conf.Action">
+        <description>Provides the UI for global settings</description>
+        <url-pattern>/woody-notify/global.conf</url-pattern>
+    </servlet>
 
+    <servlet name="Connection Test Servlet" key="woody-notify-conn-test" class="edu.wirch.woody.bitbucket.test.TestMessageAction">
+        <description>Sends a test message</description>
+        <url-pattern>/woody-notify/test</url-pattern>
+    </servlet>
 </atlassian-plugin>

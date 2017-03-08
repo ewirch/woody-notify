@@ -9,7 +9,12 @@
             <val val="&quot;unchecked&quot;"/>
         </annotation>
     </item>
-    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration'>
+	<item name='edu.wirch.woody.bitbucket.conf.ActionSupport java.util.Map&lt;java.lang.String,java.lang.String&gt; toStringMap(javax.servlet.http.HttpServletRequest)'>
+		<annotation name='java.lang.SuppressWarnings'>
+			<val val="&quot;unchecked&quot;"/>
+		</annotation>
+	</item>
+	<item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;ClassWithOnlyPrivateConstructors&quot;"/>
         </annotation>
@@ -24,9 +29,24 @@
             <val val="&quot;WeakerAccess&quot;"/>
         </annotation>
     </item>
+    <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Builder edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Builder fromMap(java.util.Map&lt;java.lang.String,java.lang.String&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UnusedReturnValue&quot;"/>
+        </annotation>
+    </item>
     <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Mapper'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;WeakerAccess&quot;"/>
+        </annotation>
+    </item>
+	<item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Mapper java.lang.String getOrDefault(java.lang.String, java.lang.String)'>
+		<annotation name='java.lang.SuppressWarnings'>
+			<val val="&quot;SameParameterValue&quot;"/>
+		</annotation>
+	</item>
+	<item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Mapper void fromMap(java.util.Map&lt;java.lang.String,java.lang.String&gt;, edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Builder)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenationArgumentToLogCall&quot;"/>
         </annotation>
     </item>
     <item name='edu.wirch.woody.bitbucket.conf.GlobalConfiguration.Mapper void ifExisting(java.lang.String, java.util.Map&lt;java.lang.String,java.lang.String&gt;, java.util.function.Consumer&lt;java.lang.String&gt;) 0'>

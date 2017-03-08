@@ -12,25 +12,21 @@ import com.atlassian.event.api.EventListener;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.templaterenderer.TemplateRenderer;
 import edu.wirch.woody.chatservice.ChatServiceFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import edu.wirch.woody.chatservice.Target;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class PullRequestApprovedListener {
-    private static final Logger log = LoggerFactory.getLogger(PullRequestApprovedListener.class);
     private static final String BASE_PATH = "/edu/wirch/woody/bitbucket/notification/pullrequest/";
 
     private final NavBuilder navBuilder;
     private final ChatServiceFactory chatServiceFactory;
-    private final TemplateRenderer templateRenderer;
+    private final StringWriterTemplateRenderer templateRenderer;
 
     @Autowired
     public PullRequestApprovedListener(@ComponentImport final NavBuilder navBuilder,
@@ -38,7 +34,7 @@ public class PullRequestApprovedListener {
                                        @ComponentImport final TemplateRenderer templateRenderer) {
         this.navBuilder = navBuilder;
         this.chatServiceFactory = chatServiceFactory;
-        this.templateRenderer = templateRenderer;
+        this.templateRenderer = new StringWriterTemplateRenderer(templateRenderer);
     }
 
 
@@ -62,18 +58,19 @@ public class PullRequestApprovedListener {
         final String text;
         final PullRequestParticipantStatus status = event.getParticipant()
                                                          .getStatus();
+        //noinspection IfStatementWithTooManyBranches
         if (status == PullRequestParticipantStatus.APPROVED) {
-            text = render(context, BASE_PATH + "approved.vm");
+            text = templateRenderer.render(context, BASE_PATH + "approved.vm");
         } else if (status == PullRequestParticipantStatus.UNAPPROVED && event.getPreviousStatus() == PullRequestParticipantStatus.APPROVED) {
-            text = render(context, BASE_PATH + "unapproved.vm");
+            text = templateRenderer.render(context, BASE_PATH + "unapproved.vm");
         } else if (status == PullRequestParticipantStatus.NEEDS_WORK) {
-            text = render(context, BASE_PATH + "needswork.vm");
+            text = templateRenderer.render(context, BASE_PATH + "needswork.vm");
         } else {
             context.put("action", status.toString());
-            text = render(context, BASE_PATH + "needsworkRevoked.vm");
+            text = templateRenderer.render(context, BASE_PATH + "needsworkRevoked.vm");
         }
         chatServiceFactory.create()
-                          .send(prAuthor, text);
+                          .send(Target.ofUser(prAuthor), text);
     }
 
     @Nonnull
@@ -96,16 +93,6 @@ public class PullRequestApprovedListener {
                                      .getUser()
                                      .getDisplayName());
         return context;
-    }
-
-    private String render(final Map<String, Object> context, final String template) {
-        final StringWriter writer = new StringWriter();
-        try {
-            templateRenderer.render(template, context, writer);
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        }
-        return writer.toString();
     }
 
 }

@@ -1,0 +1,22 @@
+<root>
+    <item name='edu.wirch.woody.bitbucket.eventlistener.global.GlobalEventsListener void onBackupFailed(com.atlassian.bitbucket.event.backup.BackupFailedEvent)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;OptionalIsPresent&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.eventlistener.global.GlobalEventsListener void onMaintenanceEnded(com.atlassian.bitbucket.event.maintenance.MaintenanceEndedEvent)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;OptionalIsPresent&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.eventlistener.global.GlobalEventsListener void onMaintenanceStarted(com.atlassian.bitbucket.event.maintenance.MaintenanceStartedEvent)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;OptionalIsPresent&quot;"/>
+        </annotation>
+    </item>
+    <item name='edu.wirch.woody.bitbucket.eventlistener.global.GlobalEventsListener.Enabled'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;WeakerAccess&quot;"/>
+        </annotation>
+    </item>
+</root>
